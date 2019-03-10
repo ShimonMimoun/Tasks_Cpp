@@ -5,7 +5,8 @@ noneed=$3
 
 cd $folderName
 
-make
+make > /dev/null 2>&1
+
 if [ $? -gt 0 ] 
  then
  echo "Error Compilation"
