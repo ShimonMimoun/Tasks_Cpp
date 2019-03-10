@@ -1,17 +1,16 @@
 #!/bin/bash
-fileTest=./makefile
 folderName=$1
 execute=$2
 noneed=$3
+
 cd $folderName
-if [ -e "$folderName/$fileTest" ] 
-then
+
 make
-    if [ $? -gt 0 ] 
-        then
-        echo "Error Compilation"
-        exit 7
-    fi
+if [ $? -gt 0 ] 
+ then
+ echo "Error Compilation"
+ exit 7
+else
 echo "Succes Compilation "
 valgrind --leak-check=full -v ./$execute > memoryleaks.txt 2>&1
 grep -q "no leaks are possible"  memoryleaks.txt
@@ -47,9 +46,4 @@ grep -q "no leaks are possible"  memoryleaks.txt
                     exit 3
             fi
     fi 
-else 
-echo "Failed arguments"
-exit 7 
 fi 
-
-
