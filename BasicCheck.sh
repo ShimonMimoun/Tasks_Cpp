@@ -5,7 +5,7 @@ noneed=$3
 
 cd $folderName
 
-make > /dev/null 2>&1
+make
 
 if [ $? -gt 0 ] 
  then
