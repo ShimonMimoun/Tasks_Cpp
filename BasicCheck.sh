@@ -27,23 +27,23 @@ else
        TreadTemp=1
     fi 
 fi
-
-if [ $Compil$MemoLa$TreadTemp == '000' ]; then
+exittemp=$Compil$MemoLa$TreadTemp
+if [ $exittemp == '000' ]; then
     echo "Compilation ok "
     echo "Memory leaks ok "
     echo "Thread ok"
     exit 0
-elif [ $Compil$MemoLa$TreadTemp == '001' ]; then
+elif [ $exittemp == '001' ]; then
       echo "Compilation ok "
       echo "Memory leaks ok "
       echo "Thread FAIL"
       exit 1
-elif [ $Compil$MemoLa$TreadTemp == '010' ]; then
+elif [ $exittemp == '010' ]; then
       echo "Compilation ok "
       echo "Memory leaks FAIL "
       echo "Thread ok  "
       exit 2
-elif [ $Compil$MemoLa$TreadTemp == '011' ]; then 
+elif [ $exittemp == '011' ]; then 
       echo "Compilation ok "
       echo "Memory leaks FAIL "
       echo "Thread Fail"
