@@ -7,23 +7,23 @@ make
 
 
 
-if [ $? -gt 0 ]; then
-   Compil=1
+if [ $? -eq 0 ]; then
+   Compil=0
 else
-    Compil=0
+    Compil=1
 
-    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
-    if [ $? -gt 0 ]; then
-       MemoLa=1
-    else
+    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute 
+    if [ $? -eq 0 ]; then
        MemoLa=0
+    else
+       MemoLa=1
     fi
  
-    valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
-    if [ $? -gt 0 ]; then 
-       TreadTemp=1
-    else
+    valgrind --tool=helgrind --error-exitcode=1 -q ./$execute 
+    if [ $? -eq 0 ]; then 
        TreadTemp=0
+    else
+       TreadTemp=1
     fi
 fi
 
