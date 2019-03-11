@@ -3,7 +3,7 @@
 folderName=$1
 execute=$2
 cd $folderName
-make &> /dev/null
+make 
 
 
 
@@ -12,25 +12,21 @@ if [ $? -gt 0 ]; then
 else
     Compil=0
 
- valgrind --leak-check=full -v ./$execute > memoryleaks.txt 2>&1
- grep -q "no leaks are possible"  memoryleaks.txt
+    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -gt 0 ]; then
        MemoLa=1
     else
        MemoLa=0
     fi
  
-valgrind --tool=helgrind $folderName/$execute > Threadcheck.txt 2>&1
-grep -q "ERROR SUMMARY: 0 errors" Threadcheck.txt   
-if [ $? -gt 0 ]; then 
+    valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
+    if [ $? -gt 0 ]; then 
        TreadTemp=1
     else
        TreadTemp=0
     fi
 fi
 
-rm memoryleaks.txt
-rm Threadcheck.txt
 answer=$Compil$MemoLa$TreadTemp
 
 if [ $answer == '000' ]; then
