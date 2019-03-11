@@ -1,51 +1,49 @@
 #!/bin/bash
+
 folderName=$1
 execute=$2
 cd $folderName
 make &> /dev/null
-if [ $? -gt 0 ] 
-then
-Compilation=1
+
+
+
+if [ $? -gt 0 ]; then
+   ansCompilation=1
 else
-Compilation=0
+    ansCompilation=0
 
-   valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$program &> /dev/null
-    if [ $? -gt 0 ] 
-    then
-    MemoryLeak=1
+    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
+    if [ $? -gt 0 ]; then
+       ansMemoryLeak=1
     else
-    MemoryLeak=0
+       ansMemoryLeak=0
     fi
-
- valgrind --tool=helgrind --error-exitcode=1 -q ./$program &> /dev/null
-    if [ $? -gt 0 ] 
-    then
-    ThreadTrace=1
-    else 
-    ThreadTrace=0
+ 
+    valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
+    if [ $? -gt 0 ]; then 
+       ansTreadRace=1
+    else
+       ansTreadRace=0
     fi
- fi   
+fi
 
+answer=$ansCompilation$ansMemoryLeak$ansTreadRace
 
-answer=$Compilation$MemoryLeak$ThreadTrace
-
-if [ $answer == '000' ] 
-then
-    echo "Compilation-PASS   Memory leaks-PASS   Thread race-PASS"
+if [ $answer == '000' ]; then
+    echo "Compilation succes  Memory leaks succes Thread succes"
     exit 0
-elif [ $answer == '001' ] 
-then
-      echo "Compilation-PASS   Memory leaks-PASS   Thread race-FAIL"
+elif [ $answer == '001' ]; then
+      echo "Compilation succes   Memory leaks succes   Thread FAIL   "
       exit 1
-elif [ $answer == '010' ] 
-then
-      echo "Compilation-PASS   Memory leaks-FAIL   Thread race-PASS"
+elif [ $answer == '010' ]; then
+      echo "Compilation- ucces   Memory leaks FAIL   Thread succes  "
       exit 2
-elif [ $answer == '011' ] 
-then 
-      echo "Compilation-PASS   Memory leaks-FAIL   Thread race-FAIL"
+elif [ $answer == '011' ];then 
+      echo "Compilation succes   Memory leaks FAIL   Thread Fail"
       exit 3
 else 
-      echo "Compilation-FAIL   Memory leaks-FAIL   Thread race-FAIL"
+      echo "Compilation FAIL   Memory leaks FAIL   Thread FAIL "
       exit 7
 fi
+
+
