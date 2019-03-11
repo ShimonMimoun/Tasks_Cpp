@@ -2,7 +2,7 @@
 folderName=$1
 execute=$2
 cd $folderName
-make
+make &> /dev/null
 if [ $? -gt 0 ] 
 then
 Compilation=1; 
