@@ -7,22 +7,22 @@ make
 
 
 
-if [ $? -eq 0 ]; then
-   Compil=0
+if [ $? -gt 0 ]; then
+   Compil=1
 else
-    Compil=1
+    Compil=0
 
     valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
-    if [ $? -eq 0 ]; then
-       MemoLa=0
-    else
+    if [ $? -gt 0 ]; then
        MemoLa=1
+    else
+       MemoLa=0
     fi
   valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
-    if [ $? -eq 0 ]; then 
-       TreadTemp=0
-    else
+    if [ $? -gt 0 ]; then 
        TreadTemp=1
+    else
+       TreadTemp=0
     fi 
 fi
 exittemp=$Compil$MemoLa$TreadTemp
