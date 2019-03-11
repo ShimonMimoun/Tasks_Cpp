@@ -5,12 +5,17 @@ execute=$2
 cd $folderName
 make 
 
-
-
 if [ $? -gt 0 ]; then
    Compil=1
 else
     Compil=0
+
+valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
+    if [ $? -gt 0 ]; then 
+       TreadTemp=1
+    else
+       TreadTemp=0
+    fi 
 
     valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -gt 0 ]; then
@@ -18,12 +23,7 @@ else
     else
        MemoLa=0
     fi
-  valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
-    if [ $? -gt 0 ]; then 
-       TreadTemp=1
-    else
-       TreadTemp=0
-    fi 
+  
 fi
 exittemp=$Compil$MemoLa$TreadTemp
 if [ $exittemp == '000' ]; then
