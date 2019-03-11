@@ -4,8 +4,7 @@ execute=$2
 noneed=$3
 
 cd $folderName
-
-make
+make &> /dev/null
 
 if [ $? -gt 0 ] 
  then
