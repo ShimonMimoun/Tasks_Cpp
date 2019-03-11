@@ -12,8 +12,6 @@ if [ $? -eq 0 ]; then
 else
     Compil=1
 
-
-
     valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -eq 0 ]; then
        MemoLa=0
@@ -28,21 +26,29 @@ else
     fi 
 fi
 exittemp=$Compil$MemoLa$TreadTemp
-
-
 if [ $exittemp == '000' ]; then
-    echo "Compilation-PASS   Memory leaks-PASS   Thread race-PASS"
+    echo "Compilation ok "
+    echo "Memory leaks ok "
+    echo "Thread ok"
     exit 0
 elif [ $exittemp == '001' ]; then
-      echo "Compilation-PASS   Memory leaks-PASS   Thread race-FAIL   ERROR number-001"
+      echo "Compilation ok "
+      echo "Memory leaks ok "
+      echo "Thread FAIL"
       exit 1
 elif [ $exittemp == '010' ]; then
-      echo "Compilation-PASS   Memory leaks-FAIL   Thread race-PASS   ERROR number-010"
+      echo "Compilation ok "
+      echo "Memory leaks FAIL "
+      echo "Thread ok  "
       exit 2
-elif [ $exittemp == '011' ];then 
-      echo "Compilation-PASS   Memory leaks-FAIL   Thread race-FAIL  ERROR number-011"
+elif [ $exittemp == '011' ]; then 
+      echo "Compilation ok "
+      echo "Memory leaks FAIL "
+      echo "Thread Fail"
       exit 3
 else 
-      echo "Compilation-FAIL   Memory leaks-FAIL   Thread race-FAIL  ERROR number-111"
+      echo "Compilation FAIL "
+      echo "Memory leaks FAIL "
+      echo "Thread FAIL "
       exit 7
-
+fi
