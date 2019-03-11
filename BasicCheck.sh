@@ -9,14 +9,14 @@ if [ $? -gt 0 ]; then
 else
     Compil=0
 
-valgrind --tool=helgrind --error-exitcode=1 -q ./$folderName$execute &> /dev/null
+valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -gt 0 ]; then 
        TreadTemp=1
     else
        TreadTemp=0
     fi 
 
-    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$folderName$execute &> /dev/null
+    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -gt 0 ]; then
        MemoLa=1
     else
