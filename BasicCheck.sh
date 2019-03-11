@@ -28,31 +28,21 @@ else
     fi 
 fi
 exittemp=$Compil$MemoLa$TreadTemp
+
+
 if [ $exittemp == '000' ]; then
-    echo "Compilation ok "
-    echo "Memory leaks ok "
-    echo "Thread ok"
+    echo "Compilation-PASS   Memory leaks-PASS   Thread race-PASS"
     exit 0
 elif [ $exittemp == '001' ]; then
-      echo "Compilation ok "
-      echo "Memory leaks ok "
-      echo "Thread FAIL"
+      echo "Compilation-PASS   Memory leaks-PASS   Thread race-FAIL   ERROR number-001"
       exit 1
 elif [ $exittemp == '010' ]; then
-      echo "Compilation ok "
-      echo "Memory leaks FAIL "
-      echo "Thread ok  "
+      echo "Compilation-PASS   Memory leaks-FAIL   Thread race-PASS   ERROR number-010"
       exit 2
-elif [ $exittemp == '011' ]; then 
-      echo "Compilation ok "
-      echo "Memory leaks FAIL "
-      echo "Thread Fail"
+elif [ $exittemp == '011' ];then 
+      echo "Compilation-PASS   Memory leaks-FAIL   Thread race-FAIL  ERROR number-011"
       exit 3
 else 
-      echo "Compilation FAIL "
-      echo "Memory leaks FAIL "
-      echo "Thread FAIL "
+      echo "Compilation-FAIL   Memory leaks-FAIL   Thread race-FAIL  ERROR number-111"
       exit 7
-fi
-
 
