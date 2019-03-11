@@ -8,26 +8,26 @@ make &> /dev/null
 
 
 if [ $? -gt 0 ]; then
-   ansCompilation=1
+   Compil=1
 else
-    ansCompilation=0
+    Compil=0
 
     valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -gt 0 ]; then
-       ansMemoryLeak=1
+       MemoLa=1
     else
-       ansMemoryLeak=0
+       MemoLa=0
     fi
  
     valgrind --tool=helgrind --error-exitcode=1 -q ./$execute &> /dev/null
     if [ $? -gt 0 ]; then 
-       ansTreadRace=1
+       TreadTemp=1
     else
-       ansTreadRace=0
+       TreadTemp=0
     fi
 fi
 
-answer=$ansCompilation$ansMemoryLeak$ansTreadRace
+answer=$Compil$MemoLa$TreadTemp
 
 if [ $answer == '000' ]; then
     echo "Compilation succes  Memory leaks succes Thread succes"
