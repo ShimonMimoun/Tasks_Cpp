@@ -9,8 +9,7 @@ Compilation=1;
 else
 Compilation=0;
 
-    valgrind --leak-check=full -v ./$execute > memoryleaks.txt 2>&1
-    grep -q "no leaks are possible"  memoryleaks.txt
+   valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$program &> /dev/null
     if [ $? -gt 0 ] 
     then
     MemoryLeak=1;
@@ -18,8 +17,7 @@ Compilation=0;
     MemoryLeak=0;
     fi
 
-    valgrind --tool=helgrind $folderName/$execute > Threadcheck.txt 2>&1
-    grep -q "ERROR SUMMARY: 0 errors" Threadcheck.txt
+ valgrind --tool=helgrind --error-exitcode=1 -q ./$program &> /dev/null
     if [ $? -gt 0 ] 
     then
     ThreadTrace=1;
@@ -27,8 +25,7 @@ Compilation=0;
     ThreadTrace=0;
     fi
  fi   
-rm memoryleaks.txt
-rm Threadcheck.txt
+
 
 answer=$Compilation$MemoryLeak$ThreadTrace
 
