@@ -12,17 +12,17 @@ Compilation=0
    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$program &> /dev/null
     if [ $? -gt 0 ] 
     then
-    MemoryLeak=1;
+    MemoryLeak=1
     else
-    MemoryLeak=0;
+    MemoryLeak=0
     fi
 
  valgrind --tool=helgrind --error-exitcode=1 -q ./$program &> /dev/null
     if [ $? -gt 0 ] 
     then
-    ThreadTrace=1;
+    ThreadTrace=1
     else 
-    ThreadTrace=0;
+    ThreadTrace=0
     fi
  fi   
 
