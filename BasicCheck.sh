@@ -3,7 +3,7 @@
 folderName=$1
 execute=$2
 make 
-
+cd $folderName
 if [ $? -gt 0 ]; then
    Compil=1
 else
