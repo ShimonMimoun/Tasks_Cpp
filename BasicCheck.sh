@@ -5,9 +5,9 @@ cd $folderName
 make &> /dev/null
 if [ $? -gt 0 ] 
 then
-Compilation=1; 
+Compilation=1
 else
-Compilation=0;
+Compilation=0
 
    valgrind --tool=memcheck ${@:3} --leak-check=full --error-exitcode=1 -q ./$program &> /dev/null
     if [ $? -gt 0 ] 
