@@ -21,7 +21,8 @@ else
     fi
  
 valgrind --tool=helgrind $folderName/$execute > Threadcheck.txt 2>&1
-grep -q "ERROR SUMMARY: 0 errors" Threadcheck.txt    if [ $? -gt 0 ]; then 
+grep -q "ERROR SUMMARY: 0 errors" Threadcheck.txt   
+if [ $? -gt 0 ]; then 
        TreadTemp=1
     else
        TreadTemp=0
